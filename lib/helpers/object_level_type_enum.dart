@@ -1,0 +1,1 @@
+enum ObjectLevelType { stair, snack }

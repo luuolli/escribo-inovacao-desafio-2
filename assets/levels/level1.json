@@ -1,0 +1,116 @@
+{
+    "size": 10,
+    "path-image": "assets/levels/level1.png",
+    "objects": [
+        {
+            "begin": 2,
+            "end": 38,
+            "type": "stair"
+        },
+        {
+            "begin": 7,
+            "end": 14,
+            "type": "stair"
+        },
+        {
+            "begin": 8,
+            "end": 31,
+            "type": "stair"
+        },
+        {
+            "begin": 16,
+            "end": 6,
+            "type": "snack"
+        },
+        {
+            "begin": 15,
+            "end": 26,
+            "type": "snack"
+        },
+        {
+            "begin": 21,
+            "end": 42,
+            "type": "stair"
+        },
+        {
+            "begin": 28,
+            "end": 84,
+            "type": "stair"
+        },
+        {
+            "begin": 36,
+            "end": 44,
+            "type": "stair"
+        },
+        {
+            "begin": 46,
+            "end": 25,
+            "type": "snack"
+        },
+        {
+            "begin": 49,
+            "end": 11,
+            "type": "snack"
+        },
+        {
+            "begin": 51,
+            "end": 67,
+            "type": "stair"
+        },
+        {
+            "begin": 62,
+            "end": 19,
+            "type": "snack"
+        },
+        {
+            "begin": 64,
+            "end": 60,
+            "type": "snack"
+        },
+        {
+            "begin": 78,
+            "end": 98,
+            "type": "stair"
+        },
+        {
+            "begin": 74,
+            "end": 53,
+            "type": "snack"
+        },
+        {
+            "begin": 71,
+            "end": 91,
+            "type": "stair"
+        },
+        {
+            "begin": 15,
+            "end": 26,
+            "type": "snack"
+        },
+        {
+            "begin": 87,
+            "end": 94,
+            "type": "stair"
+        },
+        {
+            "begin": 89,
+            "end": 68,
+            "type": "snack"
+        },
+        {
+            "begin": 99,
+            "end": 80,
+            "type": "snack"
+        },
+        {
+            "begin": 95,
+            "end": 75,
+            "type": "snack"
+        },
+        {
+            "begin": 92,
+            "end": 88,
+            "type": "snack"
+        }
+    ]
+}
