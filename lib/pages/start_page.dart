@@ -42,62 +42,75 @@ class _StartPageState extends State<StartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: SnackColors.accent,
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Jogador 1 escolha seu avatar',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 30,
-              ),
-            ),
-            SizedBox(height: 40),
-            Row(
+      backgroundColor: SnackColors.background,
+      body: Stack(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CupertinoButton(
-                    child: CircleAvatar(
-                      radius: 70,
-                      backgroundColor: SnackColors.blueDark,
-                      backgroundImage: SnackCharters.charter1,
-                    ),
-                    onPressed: () {
-                      chooseCharter(SnackCharters.charter1);
-                    }),
-                CupertinoButton(
-                    child: CircleAvatar(
-                      radius: 70,
-                      backgroundColor: SnackColors.blueDark,
-                      backgroundImage: SnackCharters.charter2,
-                    ),
-                    onPressed: () {
-                      chooseCharter(SnackCharters.charter2);
-                    }),
+                Text(
+                  'Jogador 1 escolha seu avatar',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: SnackColors.blueDark,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Roboto',
+                  ),
+                ),
+                SizedBox(height: 40),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CupertinoButton(
+                        child: CircleAvatar(
+                          radius: 70,
+                          backgroundColor: SnackColors.blueDark,
+                          backgroundImage: SnackCharters.charter1,
+                        ),
+                        onPressed: () {
+                          chooseCharter(SnackCharters.charter1);
+                        }),
+                    CupertinoButton(
+                        child: CircleAvatar(
+                          radius: 70,
+                          backgroundColor: SnackColors.blueDark,
+                          backgroundImage: SnackCharters.charter2,
+                        ),
+                        onPressed: () {
+                          chooseCharter(SnackCharters.charter2);
+                        }),
+                  ],
+                ),
+                SizedBox(height: 40),
               ],
             ),
-            SizedBox(height: 40),
-            CupertinoButton(
-              color: SnackColors.blueDark,
-              child: Text('Jogar'),
-              onPressed: () async {
-                cobraEscadas.startGame(_choiseCharterPlayer1);
-                await Navigator.pushReplacementNamed(
-                  context,
-                  '/game',
-                ).catchError(
-                  (onError) {
-                    print('página inexistente');
-                  },
-                );
-              },
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 120),
+              child: CupertinoButton(
+                color: SnackColors.blueDark,
+                child: Text('Jogar'),
+                onPressed: () async {
+                  cobraEscadas.startGame(_choiseCharterPlayer1);
+                  await Navigator.pushReplacementNamed(
+                    context,
+                    '/game',
+                  ).catchError(
+                    (onError) {
+                      print('página inexistente');
+                    },
+                  );
+                },
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

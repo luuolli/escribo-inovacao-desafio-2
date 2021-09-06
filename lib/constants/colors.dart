@@ -10,6 +10,7 @@ abstract class SnackColors {
   static Color get redDark => Color(0xFFA4040E);
   static Color get purple => Color(0xFF6A68B5);
   static Color get purpleDark => Color(0xFF383683);
+  static Color get background => Color(0xFFCFEB78);
 }
 
 abstract class SnackGradients {

@@ -50,7 +50,9 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
+    - assets/logo.png
     - assets/bk.png
+    - assets/bk-1.png
     - assets/board.png
     - assets/charters/
     - assets/dices/

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 abstract class SnackImages {
   static AssetImage get board => AssetImage('assets/board.png');
+  static AssetImage get logo => AssetImage('assets/logo.png');
   static AssetImage get background => AssetImage('assets/bk.png');
+  static AssetImage get background1 => AssetImage('assets/bk-1.png');
 }
 
 abstract class SnackCharters {
