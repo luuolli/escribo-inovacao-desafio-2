@@ -1,16 +1,26 @@
-# cobras_e_escadas
-
-A new Flutter project.
+# Escribo Inovação - Desafio 1
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Clone project:
+```shell
+git clone https://github.com/luuolli/escribo-inovacao-desafio-2.git
+```
 
-A few resources to get you started if this is your first Flutter project:
+## How to run
+Connect a android device in yout computer.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+In root folder run code in terminal:
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Install packages:
+```shell
+fluter pub get
+```
+
+Run command
+```json
+flutter run --release
+```
+
+## Observação
+Devido ao tempo mais curto de projeto, não foi possível aplicar animações mais complexas, o intuito seria fazer animações usando o Flare. Desconsiderar possíveis bugs, concertarei urgente.
