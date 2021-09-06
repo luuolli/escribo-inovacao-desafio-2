@@ -1,4 +1,4 @@
-# Escribo Inovação - Desafio 1
+# Escribo Inovação - Desafio 2
 
 ## Getting Started
 
@@ -23,4 +23,6 @@ flutter run --release
 ```
 
 ## Observação
-Devido ao tempo mais curto de projeto, não foi possível aplicar animações mais complexas, o intuito seria fazer animações usando o Flare. Desconsiderar possíveis bugs, concertarei urgente.
+Devido ao tempo mais curto de projeto, não foi possível aplicar animações mais complexas, o intuito seria fazer animações usando o Flare. Desconsiderar possíveis bugs, consertarei urgente.
+
+Obrigado!
