@@ -23,6 +23,7 @@ class _PlayerWidgetState extends State<PlayerWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<int> _movimentsAnimation;
+  late Animation<int> _fisrtAnimation;
 
   @override
   void initState() {
@@ -46,30 +47,23 @@ class _PlayerWidgetState extends State<PlayerWidget>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-        animation: _movimentsAnimation,
-        builder: (context, snapshot) {
-          return Positioned(
-            left: (widget.player.positionsToAnimate[_movimentsAnimation.value]
-                    .axisX) *
-                widget.sizeTile,
-            bottom: (widget.player.positionsToAnimate[_movimentsAnimation.value]
-                    .axisY) *
-                widget.sizeTile,
-            child: Transform.scale(
-              scale: 1,
-              child: Container(
-                width: widget.sizeTile,
-                height: widget.sizeTile,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: widget.player.image,
-                  ),
-                ),
-              ),
+    return AnimatedPositioned(
+      duration: Duration(seconds: 2),
+      left: (widget.player.offsetPosition?.axisX ?? 0) * widget.sizeTile,
+      bottom: (widget.player.offsetPosition?.axisY ?? 0) * widget.sizeTile,
+      child: Transform.scale(
+        scale: 1,
+        child: Container(
+          width: widget.sizeTile,
+          height: widget.sizeTile,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: widget.player.image,
             ),
-          );
-        });
+          ),
+        ),
+      ),
+    );
   }
 
   @override

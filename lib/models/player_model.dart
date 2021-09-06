@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'position_model.dart';
 
 class Player {
-  int position = 0;
+  int position = 1;
   Position? offsetPosition;
   bool inTurn = false;
   String? name;
@@ -16,9 +16,12 @@ class Player {
     required this.name,
   });
 
-  void changePosition(int newPosition, Position newOffsetPosition,
-      List<Position> positionsToAnimate) {
-    this.position = newPosition;
+  void changePosition(
+    int positionTo,
+    Position newOffsetPosition,
+    List<Position> positionsToAnimate,
+  ) {
+    this.position = positionTo;
     this.offsetPosition = newOffsetPosition;
     this.positionsToAnimate = positionsToAnimate;
   }

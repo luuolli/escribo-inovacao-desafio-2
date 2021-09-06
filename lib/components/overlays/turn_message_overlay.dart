@@ -2,11 +2,10 @@ import 'package:cobras_e_escadas/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class TurnMessageOverlayWidget extends StatefulWidget {
-  final String playerName;
-
+  final String message;
   const TurnMessageOverlayWidget({
     Key? key,
-    required this.playerName,
+    required this.message,
   }) : super(key: key);
 
   @override
@@ -51,8 +50,6 @@ class _TurnMessageOverlayWidgetState extends State<TurnMessageOverlayWidget>
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 100,
-      height: 100,
       child: Center(
         child: AnimatedBuilder(
           animation: _moveUpAnimation,
@@ -61,8 +58,16 @@ class _TurnMessageOverlayWidgetState extends State<TurnMessageOverlayWidget>
               offset: Offset(0, _moveUpAnimation.value),
               child: Container(
                 padding: EdgeInsets.all(40),
-                color: SnackColors.white,
-                child: Text('Vez do jogador'),
+                color: SnackColors.blueDark.withOpacity(0.2),
+                child: Text(
+                  widget.message,
+                  style: TextStyle(
+                    decoration: TextDecoration.none,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: SnackColors.white,
+                  ),
+                ),
               ),
             );
           },

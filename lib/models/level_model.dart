@@ -9,20 +9,22 @@ class Level {
   late final String pathImage;
   late final size;
 
-  BoardObject? checkPosition(int newPosition) {
+  BoardObject? checkHasAction(int positionTo) {
     try {
-      return boardObjects.firstWhere((object) => object.begin == newPosition);
+      var object =
+          boardObjects.where((object) => object.begin == positionTo).first;
+      return object;
     } catch (e) {
       return null;
     }
   }
 
-  Position getOffetPositionFromPosition(int position) {
-    return positions[position - 1];
+  Position getOffetPositionFromIndex(int index) {
+    return positions[index];
   }
 
   List<Position> getPositionsBetween(int start, int end) {
-    return positions.sublist(start, end + 1);
+    return positions.sublist(start, end);
   }
 
   Level(

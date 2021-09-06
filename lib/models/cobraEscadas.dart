@@ -22,6 +22,8 @@ class CobraEscadas {
   final dice1 = Dice();
   final dice2 = Dice();
 
+  bool get canPlayAgain => dice1.value == dice2.value;
+
   int play() {
     random(min, max) {
       var rn = new Random();

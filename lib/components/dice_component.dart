@@ -23,7 +23,9 @@ class DiceWidget extends StatelessWidget {
         // barrierColor: Colors.transparent,
         context: context,
         builder: (_) {
-          return TurnMessageOverlayWidget(playerName: 'playerName');
+          return TurnMessageOverlayWidget(
+            message: "Vez do ${isActive ? 'Jogador 1' : 'Jogador 2'}",
+          );
         });
   }
 

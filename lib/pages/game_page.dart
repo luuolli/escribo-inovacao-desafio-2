@@ -1,3 +1,5 @@
+import 'package:cobras_e_escadas/components/components.dart';
+import 'package:cobras_e_escadas/helpers/helpers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -17,31 +19,60 @@ class GamePage extends StatefulWidget {
 class _GamePageState extends State<GamePage> {
   final CobraEscadas cobraEscadas = CobraEscadas();
 
-  void changePlayerPosition(Player player, int value) {
-    setState(() {
-      var oldPosition = player.position;
-      var newPosition = oldPosition + value;
+  Future<void> showTurnMessage(BuildContext context, String message) async {
+    await showDialog(
+        // barrierColor: Colors.transparent,
+        context: context,
+        builder: (_) {
+          return TurnMessageOverlayWidget(message: message);
+        });
+  }
 
-      var positions = cobraEscadas.level.getPositionsBetween(
-        oldPosition,
-        newPosition,
-      );
+  Future<void> changePlayerPosition(
+    Player player,
+    int value, {
+    BuildContext? buildContext,
+  }) async {
+    List<Position> positions = [];
 
-      var extraPosition = cobraEscadas.level.checkPosition(newPosition)?.end;
-      if (extraPosition != null) {
-        var extraOffsetPosition =
-            cobraEscadas.level.getOffetPositionFromPosition(extraPosition);
-        positions.add(extraOffsetPosition);
+    var positionFrom = player.position;
+    var positionTo = positionFrom + value;
+
+    positions = cobraEscadas.level.getPositionsBetween(
+      positionFrom,
+      positionTo - 1,
+    );
+
+    // Check if has action
+    var extraPosition = cobraEscadas.level.checkHasAction(positionTo);
+    if (extraPosition != null) {
+      if (extraPosition.objectLevelType == ObjectLevelType.stair) {
+        await showTurnMessage(context, 'Você subiu a escada');
       }
+      if (extraPosition.objectLevelType == ObjectLevelType.snack) {
+        await showTurnMessage(context, 'Você foi comido pela cobra');
+      }
+      var extraOffsetPosition =
+          cobraEscadas.level.getOffetPositionFromIndex(extraPosition.end - 1);
+      positions.add(extraOffsetPosition);
+      positionTo = positions.last.position;
+    }
 
-      player.changePosition(
-        newPosition,
-        cobraEscadas.level.getOffetPositionFromPosition(newPosition),
-        positions,
-      );
+    //Change player position
+    player.changePosition(
+      positionTo,
+      cobraEscadas.level.getOffetPositionFromIndex(positionTo - 1),
+      positions,
+    );
 
+    // Check if can play again
+    if (cobraEscadas.canPlayAgain) {
+      setState(() {});
+      await showTurnMessage(context, 'Jogue novamente');
+    } else {
       cobraEscadas.changeTurn();
-    });
+      setState(() {});
+    }
   }
 
   @override
