@@ -31,12 +31,10 @@ class BoardWidget extends StatelessWidget {
               PlayerWidget(
                 player: cobraEscadas.player1,
                 sizeTile: sizePerTile,
-                postionsToAnimate: [],
               ),
               PlayerWidget(
                 player: cobraEscadas.player2,
                 sizeTile: sizePerTile,
-                postionsToAnimate: [],
               ),
             ],
           );

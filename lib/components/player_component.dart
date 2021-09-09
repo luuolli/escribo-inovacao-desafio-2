@@ -6,13 +6,11 @@ import 'package:flutter/material.dart';
 class PlayerWidget extends StatefulWidget {
   final Player player;
   final double sizeTile;
-  final List<Position> postionsToAnimate;
 
   PlayerWidget({
     Key? key,
     required this.player,
     required this.sizeTile,
-    required this.postionsToAnimate,
   }) : super(key: key);
 
   @override
@@ -23,24 +21,54 @@ class _PlayerWidgetState extends State<PlayerWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<int> _movimentsAnimation;
-  late Animation<int> _fisrtAnimation;
+
+  OffsetPosition get offsetPosition {
+    return widget.player.positionsToJump?[_movimentsAnimation.value] ??
+        (widget.player.offsetPosition ??
+            OffsetPosition(
+              position: 1,
+              index: 0,
+              axisX: 0,
+              axisY: 0,
+            ));
+  }
 
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: widget.postionsToAnimate.length),
+      duration: Duration(seconds: 3),
     );
+  }
 
-    _movimentsAnimation = Tween<int>(
+  @override
+  void didUpdateWidget(covariant PlayerWidget oldWidget) {
+    if (widget.player.positionsToJump != null) {
+      animateJump(positionsToJump: widget.player.positionsToJump);
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void animateJump({List<OffsetPosition>? positionsToJump}) {
+    if (positionsToJump == null) return;
+
+    _movimentsAnimation = IntTween(
       begin: 0,
-      end: widget.postionsToAnimate.length,
-    ).animate(_animationController);
-
-    _movimentsAnimation.addListener(() {
-      setState(() {});
-    });
+      end: positionsToJump.length - 1,
+    ).animate(_animationController)
+      ..addListener(() {
+        setState(() {
+          print(_movimentsAnimation.value);
+        });
+      })
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          widget.player.offsetPosition = positionsToJump.last;
+          widget.player.position = positionsToJump.last.position;
+          widget.player.positionsToJump = null;
+        }
+      });
 
     _animationController.forward();
   }
@@ -48,9 +76,11 @@ class _PlayerWidgetState extends State<PlayerWidget>
   @override
   Widget build(BuildContext context) {
     return AnimatedPositioned(
-      duration: Duration(seconds: 2),
-      left: (widget.player.offsetPosition?.axisX ?? 0) * widget.sizeTile,
-      bottom: (widget.player.offsetPosition?.axisY ?? 0) * widget.sizeTile,
+      duration: Duration(
+        milliseconds: 3000 ~/ (widget.player.positionsToJump?.length ?? 1),
+      ),
+      left: offsetPosition.axisX * widget.sizeTile,
+      bottom: offsetPosition.axisY * widget.sizeTile,
       child: Transform.scale(
         scale: 1,
         child: Container(

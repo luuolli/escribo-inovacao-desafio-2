@@ -28,42 +28,35 @@ class _GamePageState extends State<GamePage> {
         });
   }
 
+  Future<void> showWinnerMessage(BuildContext context) async {
+    await showDialog(
+        context: context,
+        builder: (_) {
+          return WinnerOverlayWidget();
+        });
+  }
+
   Future<void> changePlayerPosition(
     Player player,
     int value, {
     BuildContext? buildContext,
   }) async {
-    List<Position> positions = [];
-
     var positionFrom = player.position;
     var positionTo = positionFrom + value;
+    var positionsToJump =
+        cobraEscadas.level.getPositionsToRun(positionFrom, positionTo);
 
-    positions = cobraEscadas.level.getPositionsBetween(
-      positionFrom,
-      positionTo - 1,
+    player.positionsToJump = positionsToJump;
+
+    player.changePositions(
+      positionsToJump.last.position,
+      cobraEscadas.level.getOffsetPositionFromIndex(positionsToJump.last.index),
+      positionsToJump,
     );
 
-    // Check if has action
-    var extraPosition = cobraEscadas.level.checkHasAction(positionTo);
-    if (extraPosition != null) {
-      if (extraPosition.objectLevelType == ObjectLevelType.stair) {
-        await showTurnMessage(context, 'Você subiu a escada');
-      }
-      if (extraPosition.objectLevelType == ObjectLevelType.snack) {
-        await showTurnMessage(context, 'Você foi comido pela cobra');
-      }
-      var extraOffsetPosition =
-          cobraEscadas.level.getOffetPositionFromIndex(extraPosition.end - 1);
-      positions.add(extraOffsetPosition);
-      positionTo = positions.last.position;
+    if (player.offsetPosition?.position == 100) {
+      showWinnerMessage(context);
     }
-
-    //Change player position
-    player.changePosition(
-      positionTo,
-      cobraEscadas.level.getOffetPositionFromIndex(positionTo - 1),
-      positions,
-    );
 
     // Check if can play again
     if (cobraEscadas.canPlayAgain) {
@@ -78,14 +71,22 @@ class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
         top: false,
+        bottom: false,
         child: Container(
           decoration: BoxDecoration(
             gradient: cobraEscadas.player1.inTurn
                 ? SnackGradients.red
                 : SnackGradients.purple,
-            image: DecorationImage(image: SnackImages.background),
+            image: DecorationImage(
+              image: SnackImages.background1,
+              colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.5),
+                BlendMode.xor,
+              ),
+            ),
           ),
           child: Column(
             children: [

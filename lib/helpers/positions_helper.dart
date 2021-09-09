@@ -1,14 +1,14 @@
-import '../models/position_model.dart';
+import '../models/offset_position_model.dart';
 
 class PositionsHelper {
-  static List<Position> generatePositions({int size: 10}) {
+  static List<OffsetPosition> generatePositions({int size: 10}) {
     int position = 0;
     bool isForward = true;
-    var positions = <Position>[];
+    var positions = <OffsetPosition>[];
 
     for (var y = 0; y < size; y++) {
       for (var x = 0; x < size; x++) {
-        var pos = Position(
+        var pos = OffsetPosition(
           index: position,
           position: position + 1,
           axisX: isForward ? x : (x - (size - 1)).abs(),

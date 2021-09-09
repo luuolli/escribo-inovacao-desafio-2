@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 
-import 'position_model.dart';
+import 'offset_position_model.dart';
 
 class Player {
   int position = 1;
-  Position? offsetPosition;
+  OffsetPosition? offsetPosition;
   bool inTurn = false;
   String? name;
   AssetImage image;
-  late List<Position> positionsToAnimate;
+  List<OffsetPosition>? positionsToJump;
 
   Player({
     required this.image,
@@ -16,13 +16,13 @@ class Player {
     required this.name,
   });
 
-  void changePosition(
+  void changePositions(
     int positionTo,
-    Position newOffsetPosition,
-    List<Position> positionsToAnimate,
+    OffsetPosition newOffsetPosition,
+    List<OffsetPosition> positionsToAnimate,
   ) {
     this.position = positionTo;
     this.offsetPosition = newOffsetPosition;
-    this.positionsToAnimate = positionsToAnimate;
+    this.positionsToJump = positionsToAnimate;
   }
 }

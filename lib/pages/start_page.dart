@@ -1,7 +1,6 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:cobras_e_escadas/constants/colors.dart';
+import 'package:cobras_e_escadas/constants/constants.dart';
 import 'package:cobras_e_escadas/constants/images.dart';
-import 'package:cobras_e_escadas/models/models.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,112 +11,101 @@ class StartPage extends StatefulWidget {
   _StartPageState createState() => _StartPageState();
 }
 
-class _StartPageState extends State<StartPage> {
-  AssetImage _choiseCharterPlayer1 = SnackCharters.charter1;
-  final CobraEscadas cobraEscadas = CobraEscadas();
+class _StartPageState extends State<StartPage> with TickerProviderStateMixin {
+  late AnimationController _logoAnimationController;
+  late AnimationController _buttonAnimationController;
+  late Animation<double> _logoAnimation;
+  late Animation<double> _buttonAnimation;
 
-  final AudioCache sound = AudioCache();
-  Future<AudioPlayer> playMusic() async {
-    return await sound.loop(
-      'sounds/starter-sound.mp3',
-      stayAwake: true,
-      mode: PlayerMode.LOW_LATENCY,
-      volume: 0.1,
-    );
-  }
-
-  void chooseCharter(AssetImage choise) {
-    setState(() {
-      _choiseCharterPlayer1 = choise;
-    });
-  }
 
   @override
   void initState() {
-    // sound.clearAll();
-    // playMusic();
     super.initState();
+    // playMusic();
+
+    _logoAnimationController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1),
+    );
+    _buttonAnimationController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1),
+    );
+
+    _logoAnimation =
+        Tween<double>(begin: 310, end: 280).animate(_logoAnimationController);
+    _buttonAnimation =
+        Tween<double>(begin: 0, end: 1).animate(_buttonAnimationController);
+
+    _logoAnimation
+      ..addListener(() {
+        setState(() {});
+      })
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          _buttonAnimationController.forward();
+        }
+      });
+
+    _buttonAnimation.addListener(() {
+      setState(() {});
+    });
+
+    _logoAnimationController.forward();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: SnackColors.background,
-      body: Stack(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 30),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Jogador 1 escolha seu avatar',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: SnackColors.blueDark,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Roboto',
-                  ),
-                ),
-                SizedBox(height: 40),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CupertinoButton(
-                        child: CircleAvatar(
-                          radius: 70,
-                          backgroundColor: SnackColors.blueDark,
-                          backgroundImage: SnackCharters.charter1,
-                        ),
-                        onPressed: () {
-                          chooseCharter(SnackCharters.charter1);
-                        }),
-                    CupertinoButton(
-                        child: CircleAvatar(
-                          radius: 70,
-                          backgroundColor: SnackColors.blueDark,
-                          backgroundImage: SnackCharters.charter2,
-                        ),
-                        onPressed: () {
-                          chooseCharter(SnackCharters.charter2);
-                        }),
-                  ],
-                ),
-                SizedBox(height: 40),
-              ],
-            ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: SnackImages.background1,
+            fit: BoxFit.fitWidth,
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 120),
-              child: CupertinoButton(
-                color: SnackColors.blueDark,
-                child: Text('Jogar'),
-                onPressed: () async {
-                  cobraEscadas.startGame(_choiseCharterPlayer1);
-                  await Navigator.pushReplacementNamed(
-                    context,
-                    '/game',
-                  ).catchError(
-                    (onError) {
-                      print('página inexistente');
-                    },
-                  );
-                },
+        ),
+        child: Stack(
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image(
+                    height: _logoAnimation.value,
+                    image: SnackImages.logo,
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 80), //animate
+                child: Opacity(
+                  opacity: _buttonAnimation.value,
+                  child: CupertinoButton(
+                    color: SnackColors.blueDark,
+                    child: Text('Play'),
+                    onPressed: () async {
+                      await Navigator.pushReplacementNamed(
+                        context,
+                        '/choose-charter',
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   @override
   void dispose() {
-    sound.clearAll();
     super.dispose();
   }
 }
